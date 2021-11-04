@@ -1,3 +1,3 @@
 #!/bin/sh
-$WP_PROXY_DIR/wp-proxy-setup.sh
+"$WP_PROXY_PREFIX"/wp-proxy-setup.sh
 exec httpd-foreground
