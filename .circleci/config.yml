@@ -5,6 +5,15 @@ jobs:
       - image: cimg/base:2021.04
     steps:
       - checkout
+      - run:
+          name: Install deps
+          command: |
+            set -e
+            sudo apt-get update
+            sudo apt-get --quiet --yes install gettext-base wget
+            sudo wget https://github.com/mikefarah/yq/releases/download/v4.14.1/yq_linux_386 -O /usr/local/bin/yq
+            shasum /usr/local/bin/yq | grep -q 720f7ad3e2c76a5a931b2d8d1aec8a5e85a810f3
+            sudo chmod +x /usr/local/bin/yq
 
       # build and push Docker image
       - run:

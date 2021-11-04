@@ -1,13 +1,36 @@
-This repository is a boilerplate / scaffold to build a Docker image using CircleCI. It's primary purpose is to build
-custom images for use with [https://www.tugboat.qa], but it would work for building any Docker image.
+This docker image is intended to be used as a proxy in front of a WordPress
+site, to avoid needing to run `wp search-replace`, which on larger sites or
+networked sites can take an inordinate amount of time.
 
-# Usage
+This proxy is intended for use with [Tugboat QA](https://www.tugboat.qa), but
+should be usable in other Docker tools, such as Docker Compose, Lando, etc.
 
-1. Fork or duplicate this repository to your own repo.
-2. Add the project to CircleCI.
-3. In CircleCI, set up the `DOCKER_USER` and `DOCKER_PASS` environment variables with the Docker credentials that can push.
-4. Modify the Makefile, specifically the `DESTINATION_DOCKER_IMAGE`, to point to your destination Docker image.
-5. Modify the Dockerfile. Where possible, for building Docker images for use with [Tugboat](https://www.tugboat.qa), use one of the [official Tugboat images](https://docs.tugboat.qa/reference/tugboat-images/) to start.
-6. Read through the .circleci/config.yml. Modify the cron schedule as desired.
-6. Commit and push these changes. CircleCI should trigger an On Hold build, but you'll need to approve it.
-7. Approve the On Hold job to run it immediately OR wait for your cron schedule to have CircleCI run it then.
+This probably goes without saying but this image is…
+
+**💀 NOT for use in a production environment. 💀**
+
+## Usage
+
+Create a yaml file that contains the map of sites you'd like to proxy.
+```yaml
+backend_uri: http://php
+sites:
+  # Simple key / val syntax assumes the scheme and proxy scheme are https.
+  www.misterrogers.com: misterrogers.tugboat.qa
+  # You can declare everything as well.
+  kingfriday.com:
+    scheme: http
+    # Without setting this explicitly, kingfriday.com would have been used.
+    host: www.kingfriday.com
+    proxy_host: kingfriday-${TUGBOAT_DEFAULT_SERVICE_TOKEN}.tugboat.qa
+    proxy_scheme: http
+    # You can also override the top level backend_uri for a single site.
+    backend_uri: http://nginx
+```
+
+- `backend_uri`: The proxied service that is serving the wordpress site.
+- `sites`: A keyed list of sites. The key will be used as the `host` unless it is explicitly set below.
+- `host`: The production host that is stored in the database, e.g. `www.example.com`.
+- `scheme`: The http scheme of the real site, i.e. `https` or `http`. Defaults to `https`.
+- `proxy_host`: The host that is stored in the database, e.g. `www.example.com`.
+- `proxy_scheme`: The http scheme of the proxied site, i.e. `https` or `http`. Defaults to `https`.

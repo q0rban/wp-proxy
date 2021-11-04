@@ -6,6 +6,8 @@ exitmsg() {
 	exit 0
 }
 
+# Check that yq is available.
+hash yq 2>/dev/null || exitmsg "yq not found."
 # Check that $WP_PROXY_MAP_FILE is set.
 test -n "$WP_PROXY_MAP_FILE" || exitmsg "You must declare the path to the yaml map file in a WP_PROXY_MAP_FILE environment variable."
 # Check that the file exists and is readable.

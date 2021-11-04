@@ -1,5 +1,5 @@
 <VirtualHost *:80 >
-	ServerName misterrogers-${TUGBOAT_DEFAULT_SERVICE_TOKEN}.tugboat.qa
+	ServerName kingfriday-${TUGBOAT_DEFAULT_SERVICE_TOKEN}.tugboat.qa
 	<Location "/" >
 		RequestHeader set Host "www.kingfriday.com"
 		RequestHeader unset Accept-Encoding
@@ -7,9 +7,9 @@
 		ProxyPreserveHost On
 		ProxyPass http://nginx
 		ProxyPassReverse http://www.kingfriday.com
-		ProxyHTMLURLMap https?://www.kingfriday.com http://misterrogers-${TUGBOAT_DEFAULT_SERVICE_TOKEN}.tugboat.qa RiV
+		ProxyHTMLURLMap https?://www.kingfriday.com http://kingfriday-${TUGBOAT_DEFAULT_SERVICE_TOKEN}.tugboat.qa RiV
 		# Also substitute any other stragglers.
 		AddOutputFilterByType SUBSTITUTE text/html
-		Substitute "s#www.kingfriday.com#misterrogers-${TUGBOAT_DEFAULT_SERVICE_TOKEN}.tugboat.qa#ni"
+		Substitute "s#www.kingfriday.com#kingfriday-${TUGBOAT_DEFAULT_SERVICE_TOKEN}.tugboat.qa#ni"
 	</Location>
 </VirtualHost>
