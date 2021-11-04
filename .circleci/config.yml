@@ -11,8 +11,8 @@ jobs:
             set -e
             sudo apt-get update
             sudo apt-get --quiet --yes install gettext-base wget
-            sudo wget https://github.com/mikefarah/yq/releases/download/v4.14.1/yq_linux_arm64 -O /usr/local/bin/yq
-            shasum /usr/local/bin/yq | grep -q b01750ecc56b739b61d641a2a4797aa96ba8c8f4
+            sudo wget https://github.com/mikefarah/yq/releases/download/v4.14.1/yq_linux_386 -O /usr/local/bin/yq
+            shasum /usr/local/bin/yq | grep -q 720f7ad3e2c76a5a931b2d8d1aec8a5e85a810f3
             sudo chmod +x /usr/local/bin/yq
 
       # build and push Docker image
