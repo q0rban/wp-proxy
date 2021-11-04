@@ -6,6 +6,6 @@ sites:
   kingfriday.com:
     scheme: http
     host: www.kingfriday.com
-    proxy_host: misterrogers-${TUGBOAT_DEFAULT_SERVICE_TOKEN}.tugboat.qa
+    proxy_host: kingfriday-${TUGBOAT_DEFAULT_SERVICE_TOKEN}.tugboat.qa
     proxy_scheme: http
     backend_uri: http://nginx
