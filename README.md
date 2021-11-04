@@ -11,7 +11,7 @@ This probably goes without saying but this image is…
 
 ## Usage
 
-Create a yaml file that contains the map of sites you'd like to proxy.
+1. Create a yaml file that contains the map of sites you'd like to proxy.
 ```yaml
 backend_uri: http://php
 sites:
@@ -34,3 +34,9 @@ sites:
 - `scheme`: The http scheme of the real site, i.e. `https` or `http`. Defaults to `https`.
 - `proxy_host`: The host that is stored in the database, e.g. `www.example.com`.
 - `proxy_scheme`: The http scheme of the proxied site, i.e. `https` or `http`. Defaults to `https`.
+
+2. Create a custom environment variable `WP_PROXY_MAP_FILE` with the full path to the yaml file inside the Docker service.
+
+`WP_PROXY_MAP_FILE=path/to/map.yml`
+
+When the container starts, Apache will start and read in that file and set up the necessary vhosts.
