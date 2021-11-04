@@ -1,8 +1,8 @@
 FROM tugboatqa/httpd:latest
 
 ARG YQ_VERSION=v4.14.1
-ARG YQ_BINARY=yq_linux_arm64
-ARG YQ_SHASUM=b01750ecc56b739b61d641a2a4797aa96ba8c8f4
+ARG YQ_BINARY=yq_linux_amd64
+ARG YQ_SHASUM=dcc667e2da62f778996c9a99d4db3a95e4b6e500
 
 ENV WP_PROXY_MAP_FILE=/var/lib/tugboat/.tugboat/wp-proxy.yml
 ENV WP_PROXY_PREFIX=/usr/local/wp-proxy
