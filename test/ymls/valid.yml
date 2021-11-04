@@ -1,0 +1,11 @@
+backend_uri: http://php
+sites:
+  # Simple syntax assumes the scheme and proxy scheme are https.
+  www.misterrogers.com: misterrogers.tugboat.qa
+  # You can declare everything as well.
+  kingfriday.com:
+    scheme: http
+    host: www.kingfriday.com
+    proxy_host: misterrogers-${TUGBOAT_DEFAULT_SERVICE_TOKEN}.tugboat.qa
+    proxy_scheme: http
+    backend_uri: http://nginx

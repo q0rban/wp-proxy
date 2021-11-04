@@ -1,0 +1,15 @@
+<VirtualHost *:80 >
+	ServerName misterrogers.tugboat.qa
+	<Location "/" >
+		RequestHeader set Host "www.misterrogers.com"
+		RequestHeader unset Accept-Encoding
+		Header set Access-Control-Allow-Origin *
+		ProxyPreserveHost On
+		ProxyPass http://php
+		ProxyPassReverse https://www.misterrogers.com
+		ProxyHTMLURLMap https?://www.misterrogers.com https://misterrogers.tugboat.qa RiV
+		# Also substitute any other stragglers.
+		AddOutputFilterByType SUBSTITUTE text/html
+		Substitute "s#www.misterrogers.com#misterrogers.tugboat.qa#ni"
+	</Location>
+</VirtualHost>

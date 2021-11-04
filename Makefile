@@ -1,7 +1,9 @@
 # Run "make help" to see a description of the targets in this Makefile.
 
 # The destination image to push to.
-export DESTINATION_DOCKER_IMAGE ?= someorg/someimage
+export DESTINATION_DOCKER_IMAGE ?= q0rban/wp-proxy
+# The tag to tag in addition to latest.
+export TAG ?= 0.1
 
 ## You probably don't need to modify any of the following.
 # Today's date.
@@ -38,7 +40,9 @@ push-image: tag ## Push the tagged images to the docker registry.
 tag: ${BUILD_DIR}/build-image ## Build and tag the image.
 ${BUILD_DIR}/build-image: ${BUILD_DIR}
 #	# Build the Dockerfile in this directory.
-	docker build -t $(DESTINATION_DOCKER_IMAGE):latest .
+	docker build \
+	  -t $(DESTINATION_DOCKER_IMAGE):latest \
+	  -t $(DESTINATION_DOCKER_IMAGE):$(TAG) .
 	@touch $(@)
 
 ${BUILD_DIR}:
@@ -47,6 +51,6 @@ ${BUILD_DIR}:
 
 clean: ## Clean up all locally tagged Docker images and build directories.
 #	# Delete all image tags.
-	-docker rmi $(DESTINATION_DOCKER_IMAGE):latest
+	-docker rmi -f $(DESTINATION_DOCKER_IMAGE):latest $(DESTINATION_DOCKER_IMAGE):$(TAG)
 #	# Remove the build dir.
 	-rm -r ${BUILD_DIR}
