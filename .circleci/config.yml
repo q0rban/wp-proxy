@@ -9,11 +9,11 @@ jobs:
           name: Install deps
           command: |
             set -e
-            apt-get update
-            apt-get --quiet --yes install gettext-base wget
-            wget https://github.com/mikefarah/yq/releases/download/v4.14.1/yq_linux_arm64 -O /usr/bin/yq
+            sudo apt-get update
+            sudo apt-get --quiet --yes install gettext-base wget
+            sudo wget https://github.com/mikefarah/yq/releases/download/v4.14.1/yq_linux_arm64 -O /usr/bin/yq
             shasum /usr/bin/yq | grep -q b01750ecc56b739b61d641a2a4797aa96ba8c8f4
-            chmod +x /usr/bin/yq
+            sudo chmod +x /usr/bin/yq
 
       # build and push Docker image
       - run:
