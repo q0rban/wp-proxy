@@ -35,7 +35,7 @@ sites:
 - `proxy_host`: The host that is stored in the database, e.g. `www.example.com`.
 - `proxy_scheme`: The http scheme of the proxied site, i.e. `https` or `http`. Defaults to `https`.
 
-2. Create a custom environment variable `WP_PROXY_MAP_FILE` with the full path to the yaml file inside the Docker service.
+2. Save this file in your repo at `.tugboat/wp-proxy.yml` or define a custom environment variable with the path to the file:
 
 `WP_PROXY_MAP_FILE=path/to/map.yml`
 
