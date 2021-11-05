@@ -7,7 +7,9 @@ site, to avoid needing to run `wp search-replace`, which on larger sites or
 networked sites can be quite time-consuming.
 
 This proxy is intended for use with [Tugboat QA](https://www.tugboat.qa), but
-should be usable in other Docker tools, such as Docker Compose, Lando, etc.
+should be usable in other Docker tools, such as 
+[Docker Compose](https://docs.docker.com/compose/),
+[Lando](https://lando.dev/), etc.
 
 This probably goes without saying but this image is…
 
