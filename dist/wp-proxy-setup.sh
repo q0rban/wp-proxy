@@ -19,7 +19,7 @@ test -d "${WP_PROXY_PREFIX}/conf.d" || exitmsg "The directory '${WP_PROXY_PREFIX
 
 rm -f "${WP_PROXY_PREFIX}"/conf.d/*.vhost
 
-default_backend_uri=$(yq eval '.backend_uri' "$WP_PROXY_MAP_FILE")
+default_backend_uri=$(yq eval '.backend_uri' "$WP_PROXY_MAP_FILE" | sed -e 's@/*$@@')
 
 (
 	for key in $(yq eval '.sites | keys | .[]' "$WP_PROXY_MAP_FILE"); do
@@ -31,7 +31,7 @@ default_backend_uri=$(yq eval '.backend_uri' "$WP_PROXY_MAP_FILE")
 
 		backend_uri=$default_backend_uri
 		if yq --exit-status eval ".sites.\"${key}\".backend_uri" "$WP_PROXY_MAP_FILE" >/dev/null 2>&1; then
-			backend_uri=$(yq eval ".sites.\"${key}\".backend_uri" "$WP_PROXY_MAP_FILE")
+			backend_uri=$(yq eval ".sites.\"${key}\".backend_uri" "$WP_PROXY_MAP_FILE" | sed -e 's@/*$@@')
 		fi
 		export backend_uri
 

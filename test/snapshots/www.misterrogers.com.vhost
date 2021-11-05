@@ -5,7 +5,7 @@
 		RequestHeader unset Accept-Encoding
 		Header set Access-Control-Allow-Origin *
 		ProxyPreserveHost On
-		ProxyPass http://php
+		ProxyPass http://php/
 		ProxyPassReverse https://www.misterrogers.com
 		ProxyHTMLURLMap https?://www.misterrogers.com https://misterrogers.tugboat.qa RiV
 		# Also substitute any other stragglers.
