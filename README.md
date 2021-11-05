@@ -15,14 +15,20 @@ This probably goes without saying but this image is…
 ```yaml
 backend_uri: http://php
 sites:
-  # Simple key / val syntax assumes the scheme and proxy scheme are https.
-  www.misterrogers.com: misterrogers.tugboat.qa
+  # To do a simple map and use the defaults, specify the production host on the
+  # left as the key, and the proxied host name on the right as the value. This
+  # would be equivalent to executing the following 'wp search-replace' command:
+  #     wp search-replace www.mister-rogers.com mister-rogers.local
+  www.mister-rogers.com: mister-rogers.local
+
   # Verbose syntax--you can declare everything explicitly:
   kingfriday.com:
+    # The scheme of the production site. Defaults to https.
     scheme: http
     # Without setting this explicitly, kingfriday.com would have been used.
     host: www.kingfriday.com
     proxy_host: kingfriday-${TUGBOAT_DEFAULT_SERVICE_TOKEN}.tugboat.qa
+    # The scheme of the proxy. Defaults to https.
     proxy_scheme: http
     # You can also override the top level backend_uri for a single site.
     backend_uri: http://nginx
@@ -32,13 +38,13 @@ sites:
 - `sites`: A keyed list of sites. The key will be used as the `host` unless it is explicitly set below.
 - `host`: The production host that is stored in the database, e.g. `www.example.com`.
 - `scheme`: The http scheme of the real site, i.e. `https` or `http`. Defaults to `https`.
-- `proxy_host`: The host that is stored in the database, e.g. `www.example.com`.
+- `proxy_host`: The host the proxy will serve the site from, e.g. `localhost`.
 - `proxy_scheme`: The http scheme of the proxied site, i.e. `https` or `http`. Defaults to `https`.
 
-2. Save this file in your repo at `.tugboat/wp-proxy.yml` or define a custom
+2. Save this file in your repo at `.tugboat/wp-proxy.yml`. Or define a custom
 environment variable with the path to the file:
 
-`WP_PROXY_MAP_FILE=path/to/map.yml`
+`WP_PROXY_MAP_FILE=path/to/wp-proxy.yml`
 
 When the container starts, Apache will start and read in that file and set up
 the necessary vhosts.
