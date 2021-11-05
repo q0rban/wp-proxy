@@ -3,7 +3,7 @@
 **Built by [Tugboat QA](https://www.tugboat.qa) 🚢**
 
 This docker image is intended to be used as a proxy in front of a WordPress
-site, to avoid needing to run `wp search-replace`, which on larger sites or
+site, to avoid needing to run `wp search-replace`, which on larger or
 networked sites can be quite time-consuming.
 
 This proxy is intended for use with [Tugboat QA](https://www.tugboat.qa), but
