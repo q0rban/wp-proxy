@@ -54,5 +54,6 @@ default_backend_uri=$(yq eval '.backend_uri' "$WP_PROXY_MAP_FILE" | sed -e 's@/*
 		export proxy_host
 
 		envsubst < "${WP_PROXY_PREFIX}"/vhost.tpl.conf > "${WP_PROXY_PREFIX}"/conf.d/"${source_host}".vhost
+		echo "wp-proxy: Created vhost for ${source_scheme}://${source_host} at ${proxy_scheme}://${proxy_host} running on backend server ${backend_uri}." 1>&2;
 	done
 )
