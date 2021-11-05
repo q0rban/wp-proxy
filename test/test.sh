@@ -17,11 +17,23 @@ trap cleanup SIGINT SIGTERM EXIT
 
 test -x test/test.sh || exiterr "You must execute this test script from the root of the repo."
 
-output=$(WP_PROXY_MAP_FILE=./test/ymls/valid.yml dist/wp-proxy-setup.sh)
+output=$(WP_PROXY_MAP_FILE=./test/ymls/valid.yml dist/wp-proxy-setup.sh 2>&1)
 
-test -z "$output" || exiterr "Command failed with message: '$output'"
+# shellcheck disable=SC2016
+expected='wp-proxy: Created vhost for https://www.misterrogers.com at https://misterrogers.tugboat.qa running on backend server http://php.
+wp-proxy: Created vhost for http://www.kingfriday.com at http://kingfriday-${TUGBOAT_DEFAULT_SERVICE_TOKEN}.tugboat.qa running on backend server http://nginx.'
 
-echo "✔ Successfully read valid.yml." 1>&2;
+if [[ "$output" != "$expected" ]]; then
+	echo "✘ The expected output from processing valid.yml does not match." 1>&2
+	echo
+	echo "Expected output:"
+	echo "$expected"
+	echo
+	echo "Actual output:"
+	echo "$output"
+	exit 23
+fi
+echo "✔ Successfully processed valid.yml." 1>&2;
 
 for filepath in test/snapshots/*.vhost; do
 	file=$(basename "$filepath")
