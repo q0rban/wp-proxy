@@ -65,6 +65,18 @@ services:
 Since the PHP service name is `php`, the `backend_uri` in your `wp-proxy.yml`
 would be `http://php`.
 
+If the production URL for this site that's stored in the database is
+`https://www.mister-rogers.com`, then you might have the following
+`.tugboat/wp-proxy.yml`:
+
+```yaml
+backend_uri: http://php
+sites:
+  www.mister-rogers.com: ${TUGBOAT_DEFAULT_SERVICE_URL_HOST}
+```
+
+### Networked / multisite WordPress
+
 If you're dealing with a large networked site, you would want to use Tugboat's
 [`aliases`](https://docs.tugboat.qa/reference/tugboat-configuration/#aliases).
 For example:
