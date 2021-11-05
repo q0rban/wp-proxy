@@ -8,4 +8,5 @@ sites:
     host: www.kingfriday.com
     proxy_host: kingfriday-${TUGBOAT_DEFAULT_SERVICE_TOKEN}.tugboat.qa
     proxy_scheme: http
-    backend_uri: http://nginx
+    # Testing that multiple trailing slashes are trimmed.
+    backend_uri: http://nginx///
