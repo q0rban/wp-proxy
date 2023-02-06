@@ -1,12 +1,12 @@
 # WordPress Proxy
 
-**Built by [Tugboat QA](https://www.tugboat.qa) 🚢**
+**Built by [Tugboat QA](https://www.tugboatqa.com) 🚢**
 
 This docker image is intended to be used as a proxy in front of a WordPress
 site, to avoid needing to run `wp search-replace`, which on larger or
 networked sites can be quite time-consuming.
 
-This proxy is intended for use with [Tugboat QA](https://www.tugboat.qa), but
+This proxy is intended for use with [Tugboat QA](https://www.tugboatqa.com), but
 should be usable in other Docker tools, such as 
 [Docker Compose](https://docs.docker.com/compose/),
 [Lando](https://lando.dev/), etc.
@@ -33,7 +33,7 @@ sites:
     scheme: http
     # Without setting this explicitly, kingfriday.com would have been used.
     host: www.kingfriday.com
-    proxy_host: kingfriday-${TUGBOAT_DEFAULT_SERVICE_TOKEN}.tugboat.qa
+    proxy_host: kingfriday-${TUGBOAT_DEFAULT_SERVICE_TOKEN}.tugboatqa.com
     # The scheme of the proxy. Defaults to https.
     proxy_scheme: http
     # You can also override the top level backend_uri for a single site.
@@ -58,7 +58,7 @@ the necessary vhosts.
 ## Sample Tugboat config.yml
 
 Here's an example config.yml if you're using this in
-[Tugboat](https://www.tugboat.qa):
+[Tugboat](https://www.tugboatqa.com):
 
 ```yaml
 services:
@@ -90,7 +90,7 @@ sites:
 ### Networked / multisite WordPress
 
 If you're dealing with a large networked site, you would want to use Tugboat's
-[`aliases`](https://docs.tugboat.qa/reference/tugboat-configuration/#aliases).
+[`aliases`](https://docs.tugboatqa.com/reference/tugboat-configuration/#aliases).
 For example:
 
 ```yaml
@@ -113,8 +113,8 @@ Then you might have the following `.tugboat/wp-proxy.yml`:
 ```yaml
 backend_uri: http://php
 sites:
-  www.mister-rogers.com: mister-rogers-${TUGBOAT_DEFAULT_SERVICE_TOKEN}.tugboat.qa
-  www.lady-aberlin.com: lady-aberlin-${TUGBOAT_DEFAULT_SERVICE_TOKEN}.tugboat.qa
-  www.neighbor-aber.com: neighbor-aber-${TUGBOAT_DEFAULT_SERVICE_TOKEN}.tugboat.qa
-  www.handyman-negri.com: handyman-negri-${TUGBOAT_DEFAULT_SERVICE_TOKEN}.tugboat.qa
+  www.mister-rogers.com: mister-rogers-${TUGBOAT_DEFAULT_SERVICE_TOKEN}.tugboatqa.com
+  www.lady-aberlin.com: lady-aberlin-${TUGBOAT_DEFAULT_SERVICE_TOKEN}.tugboatqa.com
+  www.neighbor-aber.com: neighbor-aber-${TUGBOAT_DEFAULT_SERVICE_TOKEN}.tugboatqa.com
+  www.handyman-negri.com: handyman-negri-${TUGBOAT_DEFAULT_SERVICE_TOKEN}.tugboatqa.com
 ```
