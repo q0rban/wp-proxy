@@ -1,22 +1,17 @@
 FROM tugboatqa/httpd:latest
 
-ARG YQ_VERSION=v4.14.1
-ARG YQ_BINARY=yq_linux_amd64
-ARG YQ_SHASUM=dcc667e2da62f778996c9a99d4db3a95e4b6e500
+ARG NODEJS_VERSION
 
 ENV WP_PROXY_MAP_FILE=/var/lib/tugboat/.tugboat/wp-proxy.yml
-ENV WP_PROXY_PREFIX=/usr/local/wp-proxy
+ENV WP_PROXY_DIR=/usr/local/wp-proxy
 
-COPY dist ${WP_PROXY_PREFIX}
+COPY dist ${WP_PROXY_DIR}
 
 RUN set -x \
-  && apt-get update \
-  && apt-get --quiet --yes install gettext-base wget \
-  && wget https://github.com/mikefarah/yq/releases/download/${YQ_VERSION}/${YQ_BINARY} -O /usr/local/bin/yq \
-  && shasum /usr/local/bin/yq | grep -q ${YQ_SHASUM} \
-  && chmod +x /usr/local/bin/yq \
-  && ln -snf ${WP_PROXY_PREFIX}/wp-proxy-setup.sh /usr/local/bin/wp-proxy-setup.sh \
-  && cp ${WP_PROXY_PREFIX}/run /etc/service/httpd/run \
-  && echo "Include ${WP_PROXY_PREFIX}/wp-proxy.conf" >> "$HTTPD_PREFIX/conf/httpd.conf" \
+  && curl -fsSL https://deb.nodesource.com/setup_${NODEJS_VERSION}.x | bash - \
+  && apt-get --quiet --yes install nodejs \
+  && npm --prefix ${WP_PROXY_DIR} ci \
+  && cp ${WP_PROXY_DIR}/run /etc/service/httpd/run \
+  && echo "Include ${WP_PROXY_DIR}/wp-proxy.conf" >> "$HTTPD_PREFIX/conf/httpd.conf" \
   && apt-get clean \
   && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*

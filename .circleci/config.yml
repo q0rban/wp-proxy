@@ -9,13 +9,10 @@ jobs:
           name: Install deps
           command: |
             set -e
-            sudo apt-get update
-            sudo apt-get --quiet --yes install gettext-base wget
-            sudo wget https://github.com/mikefarah/yq/releases/download/v4.14.1/yq_linux_386 -O /usr/local/bin/yq
-            shasum /usr/local/bin/yq | grep -q 720f7ad3e2c76a5a931b2d8d1aec8a5e85a810f3
-            sudo chmod +x /usr/local/bin/yq
+            curl -fsSL https://deb.nodesource.com/setup_18.x | sudo bash -
+            sudo apt-get --quiet --yes install nodejs
+            npm --prefix dist ci
 
-      # build and push Docker image
       - run:
           name: Test
           command: test/test.sh
