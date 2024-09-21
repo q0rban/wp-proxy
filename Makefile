@@ -3,7 +3,9 @@
 # The destination image to push to.
 export DESTINATION_DOCKER_IMAGE ?= q0rban/wp-proxy
 # The tag to tag in addition to latest.
-export TAG ?= 0.1
+export TAG ?= 0.2
+# The version of nodejs
+export NODEJS_VERSION ?= 18
 
 ## You probably don't need to modify any of the following.
 # Today's date.
@@ -41,6 +43,7 @@ tag: ${BUILD_DIR}/build-image ## Build and tag the image.
 ${BUILD_DIR}/build-image: ${BUILD_DIR}
 #	# Build the Dockerfile in this directory.
 	docker build \
+	  --build-arg NODEJS_VERSION=$(NODEJS_VERSION) \
 	  -t $(DESTINATION_DOCKER_IMAGE):latest \
 	  -t $(DESTINATION_DOCKER_IMAGE):$(TAG) .
 	@touch $(@)

@@ -1,0 +1,30 @@
+{
+  "name": "wp-proxy",
+  "version": "0.2.0",
+  "description": "A WordPress URL Rewriting Proxy",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/q0rban/wp-proxy.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/q0rban/wp-proxy/issues"
+  },
+  "homepage": "https://github.com/q0rban/wp-proxy#readme",
+  "devDependencies": {
+    "@eslint/js": "^9.11.0",
+    "eslint": "^9.11.0",
+    "globals": "^15.9.0"
+  },
+  "dependencies": {
+    "handlebars": "^4.7.8"
+  }
+}

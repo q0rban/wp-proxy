@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -e
 
-export WP_PROXY_PREFIX=./dist
+export WP_PROXY_DIR=./dist
 
 exiterr() {
 	echo -e "✘ $*" 1>&2;
@@ -17,11 +17,12 @@ trap cleanup SIGINT SIGTERM EXIT
 
 test -x test/test.sh || exiterr "You must execute this test script from the root of the repo."
 
-output=$(WP_PROXY_MAP_FILE=./test/ymls/valid.yml dist/wp-proxy-setup.sh 2>&1)
+output=$(WP_PROXY_MAP_FILE=./test/ymls/valid.yml node dist 2>&1)
 
 # shellcheck disable=SC2016
 expected='wp-proxy: Created vhost for https://www.misterrogers.com at https://misterrogers.tugboat.qa running on backend server http://php.
-wp-proxy: Created vhost for http://www.kingfriday.com at http://kingfriday-${TUGBOAT_DEFAULT_SERVICE_TOKEN}.tugboat.qa running on backend server http://nginx.'
+wp-proxy: Created vhost for http://www.kingfriday.com at http://kingfriday-${TUGBOAT_DEFAULT_SERVICE_TOKEN}.tugboat.qa running on backend server http://nginx.
+WP Proxy config generation completed successfully.'
 
 if [[ "$output" != "$expected" ]]; then
 	echo "✘ The expected output from processing valid.yml does not match." 1>&2
@@ -48,9 +49,11 @@ for filepath in dist/conf.d/*.vhost; do
 done
 echo "✔ All files in dist/conf.d exist in test/snapshots and match." 1>&2;
 
-expected="Error: yaml: mapping values are not allowed in this context
-The file './test/ymls/invalid.yml' is not valid yaml."
-output=$(WP_PROXY_MAP_FILE=./test/ymls/invalid.yml dist/wp-proxy-setup.sh 2>&1)
+expected="bad indentation of a mapping entry (1:11)
+
+ 1 | sad: panda: ◖㈠ ω ㈠◗
+---------------^"
+output=$(WP_PROXY_MAP_FILE=./test/ymls/invalid.yml node dist 2>&1 || true)
 test -n "$output" || exiterr "The test/ymls/invalid.yml should result in an error message."
 if [[ "$output" != "$expected" ]]; then
 	echo "✘ The error message for test/ymls/invalid.yml does not match." 1>&2

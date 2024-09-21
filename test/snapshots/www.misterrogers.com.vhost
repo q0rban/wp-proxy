@@ -10,6 +10,7 @@
 		ProxyHTMLURLMap https?://www.misterrogers.com https://misterrogers.tugboat.qa RiV
 		# Also substitute any other stragglers.
 		AddOutputFilterByType SUBSTITUTE text/html
-		Substitute "s#www.misterrogers.com#misterrogers.tugboat.qa#ni"
+		Substitute "s|https://www.misterrogers.com|https://misterrogers.tugboat.qa|ni"
+		Substitute "s|http://www.kingfriday.com|http://kingfriday-${TUGBOAT_DEFAULT_SERVICE_TOKEN}.tugboat.qa|ni"
 	</Location>
 </VirtualHost>
